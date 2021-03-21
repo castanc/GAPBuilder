@@ -37,6 +37,9 @@
 
   <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
 
+  <!-- formio -->
+  <link rel='stylesheet' href='https://unpkg.com/formiojs@latest/dist/formio.full.min.css'>
+  <script src='https://unpkg.com/formiojs@latest/dist/formio.full.min.js'></script>
 
 </head>
 
@@ -44,6 +47,7 @@
 <?!= include('frontend/css/estilos_form'); ?>
 <?!= include('frontend/css/estilos_css'); ?>
 <?!= include('frontend/css/select_css'); ?>
+<?!= include('frontend/js/js_formio'); ?>
 <?!= include('frontend/js/js_model'); ?>
 <?!= include('frontend/js/js_utils'); ?>
 <?!= include('frontend/js/js_moment'); ?>
@@ -71,9 +75,9 @@
     <div id="header_Settings" class="select-css"  onclick="openSection(this.id)">
       Settings
     </div>
-    <form action="" class="formulario" id="formSettings">
+    
       <div id="Settings"></div>
-  </form>
+
     
 
 

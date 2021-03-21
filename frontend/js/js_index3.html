@@ -23,6 +23,9 @@
     let formKey = "";
     let record = {};
     let records = [];
+    let formio = {};
+    let formioPopup = {};
+    let formios = [];
     let confirming = false;
 
 
@@ -205,7 +208,7 @@
         }
     }
 
-    function changeClasses(campo,condition) {
+    function changeClasses(campo, condition) {
         if (condition) {
             document.getElementById(`grupo__${campo}`).classList.remove('formulario__grupo-incorrecto');
             document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-correcto');
@@ -243,7 +246,7 @@
     //0. Initialize
     function initialize() {
         showDiv(spinner);
-        formulario = document.getElementById('formulario');
+        //formulario = document.getElementById('formulario');
         restoreCache();
 
 
@@ -275,6 +278,37 @@
     }
 
 
+    function processResponseCreateBaseFolder(json) {
+        processResponse(json);
+        if (response.result == 200) {
+            let form = response.objects[0].value;
+            Formio.createForm(document.getElementById('sectionNew'), form).then(function (form) {
+                showDiv("sectionNew");
+                form.on('change', function (change) {
+                    console.log("formio change", change);
+                })
+            });
+        };
+    }
+
+    function CreateBaseFolder() {
+        console.log("create abse folder");
+        if (document.forms["formSettings"].checkValidity()) {
+            let input = document.getElementById("BASE_FOLDER");
+            let baseFolder = input.value;
+            console.log("CreateBaseFolder", baseFolder);
+            disableButtons(true);
+            showDiv("spinner");
+            showMessage("Setting Up Development Environment...");
+            hideDiv(uiCache.controlId);
+            google.script.run.withFailureHandler(failureHandler)
+                .withSuccessHandler(processResponseCreateBaseFolder)
+                .CreateBaseFolder(baseFolder);
+        }
+        else
+            showError("Some errors validating form.");
+    }
+
     function submitForm() {
         if (uiCache.NeedsConfirmation && !confirming) {
             writeInnerHtml("btnSubmit", "Confirm");
@@ -292,7 +326,7 @@
             hideDiv(uiCache.controlId);
             google.script.run.withFailureHandler(failureHandler)
                 .withSuccessHandler(processResponSubmitForm)
-                .ProcessForm(uiCache.formId, duiCache.controlId,document.Forms[uiCache.formId]);
+                .ProcessForm(uiCache.formId, duiCache.controlId, document.Forms[uiCache.formId]);
         }
         else
             showError("Some errors validating form.");

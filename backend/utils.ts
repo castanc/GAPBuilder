@@ -1,6 +1,7 @@
-import { FileInfo } from "../Models/FileInfo";
-import { GSResponse } from "../Models/GSResponse";
+import { FileInfo } from "./Models/FileInfo";
+import { GSResponse } from "./Models/GSResponse";
 import { SysLog } from "./SysLog";
+import {GSResult } from "./models/GSResult";
 
 export class Utils {
 
@@ -35,6 +36,7 @@ export class Utils {
         return folder;
     }
 
+    
 
     static ValidateEmail(mail) {
         if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(mail))
@@ -217,21 +219,18 @@ export class Utils {
         return spreadSheet;
     }
 
-    static getCreateSpreadSheet(folder, fileName, tabNames: string = "", colNames: string = "") {
+    static getCreateSpreadSheet(folder, fileName, tabNames: string = "", result: GSResult) {
         let file = Utils.getFileFromFolder(fileName, folder);
         let tabs = tabNames.split(',');
-        let cols = colNames.split(",");
         let spreadSheet = null;
 
         if (file == null) {
+            result.IsNew = true;
             spreadSheet = SpreadsheetApp.create(fileName);
             if (tabs.length > 0) {
                 if (tabs[0].length > 0) {
                     var sh = spreadSheet.getActiveSheet();
                     sh.setName(tabs[0]);
-                    if (cols.length > 0) {
-                        sh.appendRow(cols);
-                    }
                 }
 
                 for (var i = 1; i < tabs.length; i++) {

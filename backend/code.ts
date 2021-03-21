@@ -6,6 +6,12 @@ import { Service } from "./service";
 import { SysLog } from "./SysLog";
 import { Utils } from "./Utils";
 
+function testCreateBaseFolder(){
+
+    let result = CreateBaseFolder("GAPBase");
+    Logger.log(result);
+}
+
 function testGetHtmlSelect(){
     let sv = new Service();
     let result = sv.getHtmlSelect("Items","RT");
@@ -63,6 +69,19 @@ function testGetId()
     let result = sv.getId("Id");
 }
 
+
+function CreateBaseFolder(baseFolder){
+    let sv = new BaseService();
+    let response = new GSResponse();
+    try{
+        response = sv.CreateBaseFolder(baseFolder);
+    }
+    catch(ex)
+    {
+        handleException(ex, CreateBaseFolder.name, baseFolder);
+    }
+    return JSON.stringify(response);
+}
 
 function log(msg, data)
 {
@@ -283,11 +302,18 @@ function getItems()
 
 function handleException(ex, response, method ="", additional = "" )
 {
+    try
+    {
     response.result = 500;
     response.addError("Exception",ex.message);
     response.addError("StackTrace",ex.stackTrace);
     response.addError("method", method);
     response.addError("additional",additional);
+    }
+    catch(ex)
+    {
+        Logger.log("handleException exception",ex);
+    }
 
     SysLog.logException(ex,method,additional)
 }
