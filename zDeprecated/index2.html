@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>GSApp5</title>
+  <!--
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  -->
+  <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> 
+
+
+  <base target="_top">
+  <!-- 
+        https://www.w3schools.com/bootstrap4/bootstrap_get_started.asp        
+    -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
+
+
+</head>
+
+<?!= include('frontend/css/IconMoonStyle_css'); ?>
+<?!= include('frontend/css/stylesheet2'); ?>
+<?!= include('frontend/css/estilos_css'); ?>
+<?!= include('frontend/css/select_css'); ?>
+<?!= include('frontend/js/js_model'); ?>
+<?!= include('frontend/js/js_utils'); ?>
+<?!= include('frontend/js/js_moment'); ?>
+<?!= include('frontend/js/formulario_js'); ?>
+<?!= include('frontend/js/js_index2'); ?>
+
+
+<body>
+    <div id="header" class="select-css">
+        Control Diabetes
+        <div id="spinner" class="spinner-border text-primary" id="spinner" role="status" style="display:none;">
+          <span class="sr-only">Loading...</span>
+        </div>
+
+    </div>
+
+    <div id="header_sectionNew" class="select-css" onclick="openSection(this.id)">
+        Nuevo Registro
+    </div>
+    <div id="sectionNew" class="form-content" style="display: none;">
+    
+    </div>
+
+    <div id="header_settings" class="select-css"  onclick="openSection(this.id)">
+      Settings
+    </div>
+    <div id="settings">
+
+    </div>
+
+
+    <div class="footer">
+      <div id="result" class="container h4 mb-4 text-info text-center"></div>
+      <div id="error" class="container h4 mb-4 text-danger"></div>
+    </div>
+  </div>
+</body>
+</html>

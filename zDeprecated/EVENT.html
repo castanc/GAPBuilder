@@ -1,0 +1,16 @@
+<div class="text-responsive">
+    <div class="row fat-row">
+        <div class="col-md-4">Evento</div>
+        <div class="col-md-8">
+            <?!= getEvents(); ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">Detalles</div>
+
+        <div class="col-md-8">
+            <textarea id="DETAILS" name="DETAILS" rows="5" id="DETAILS" name="DETAILS" placeholder="Details"
+                onblur="onblurField(this.name,this.value)" required class="form-control big-font"></textarea>
+        </div>
+    </div>
+</div>

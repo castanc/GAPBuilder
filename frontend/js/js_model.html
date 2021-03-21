@@ -1,0 +1,128 @@
+<script>
+var exports = exports || {};
+var module = module || { exports: exports };
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.KeyValuePair = void 0;
+
+class KeyValuePair {
+    constructor(key, value) {
+        this.key = key;
+        this.value = value;
+    }
+}
+exports.KeyValuePair = KeyValuePair;
+
+exports.SelectableItem = void 0;
+class SelectableItem {
+    constructor(key, value, icon) {
+        this.key = key;
+        this.value = value;
+        this.selected = false;
+        this.icon = icon
+    }
+}
+exports.SelectableItem = SelectableItem;
+
+exports.KVPCollection = void 0;
+class KVPCollection {
+    constructor() {
+        this.arr = new Array();
+    }
+
+    initialize(colList) {
+        let c = colList.split(',');
+        this.arr = new Array();
+        for (var i = 0; i < c.length; i++) {
+            this.arr.push( new KeyValuePair(c[i], ""));
+        }
+    }
+
+    add(key, value) {
+        this.arr.push(new KeyValuePair(key, value));
+    }
+    update(key, value) {
+        let existing = this.arr.filter(x => x.key == key);
+        if (existing.length > 0)
+        {
+            existing[0].value = value;
+        }
+        else
+        {
+            this.arr.push(new KeyValuePair(key, value));
+            console.log(`Adding Data: ${key}`);
+
+        }
+    }
+    get(key) {
+        let existing = this.arr.filter(x => x.key == key);
+        if (existing.length > 0)
+            return existing[0].value;
+        else
+            return "";
+    }
+    getNumber(key) {
+        try {
+            let existing = this.arr.filter(x => x.key == key);
+            if (existing.length > 0)
+                return Number(existing[0].value);
+            else
+                return 0;
+        }
+        catch (ex) {
+            return 0;
+        }
+    }
+}    
+exports.KVPCollection = KVPCollection;
+
+exports.RecordItem = void 0;
+class RecordItem {
+    constructor() {
+        this.id = 0;
+        this.itemId = 0;
+        this.cant = 0;
+        this.unit = "";
+        this.descr = "";
+        this.url = "";
+    }
+}
+
+exports.RecordItemBase = void 0;
+class RecordItemBase {
+    constructor() {
+        this.id = 0;
+        this.itemId = 0;
+        this.cant = 0;
+    }
+}
+exports.RecordItemBase = RecordItemBase;
+
+
+exports.LogMessage = void 0;
+class LogMessage {
+    constructor() {
+        this.title = "";
+        this.text = "";
+        this.obj = null;
+    }
+}
+exports.LogMessage = LogMessage;
+LogMessage.method = "";
+
+
+exports.LocalData = void 0;
+var LocalData = /** @class */ (function () {
+    function LocalData() {
+        this.Items = new Array();
+        this.FoodItems = new Array();
+        this.DrugItems = new Array();
+        this.ExeItems = new Array();
+        this.RecTypes = new Array();
+        this.GlucLevels = new Array();
+    }
+    return LocalData;
+}());
+exports.LocalData = LocalData;
+
+
+</script>

@@ -1,0 +1,107 @@
+<form id="report" class="text-responsive">
+    <div class="row">
+        <div class="col-md-2">
+            Fechas
+        </div>
+        <div class="col-md-5">
+            <input type="date" class="col-md-5 form-control title-font" id="FECHA_DESDE" name="FECHA_DESDE"
+                oninput="onInputField(this.id,this.value)">
+        </div>
+        <div class="col-md-5">
+            <input type="date" class="col-md-5 form-control title-font" id="FECHA_HASTA" name="FECHA_HASTA"
+                oninput="onInputField(this.id,this.value)">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            Hora
+        </div>
+        <div class="col-md-5">
+            <input type="time" class="col-md-5 form-control title-font" id="HORA_DESDE" name="HORA_DESDE"
+            oninput="onInputField(this.id,this.value)">
+        </div>
+        <div class="col-md-5">
+            <input type="time" class="col-md-5 form-control title-font" id="HORA_HASTA" name="HORA_HASTA"\
+            oninput="onInputField(this.id,this.value)">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            Glucosa
+        </div>
+        <div class="col-md-5">
+            <input type="number" class="col-md-5 form-control title-font" id="GLUC_DESDE" name="GLUC_DESDE"
+            oninput="onInputField(this.id,this.value)">
+        </div>
+        <div class="col-md-5">
+            <input type="number" class="col-md-5 form-control title-font" id="GLUC_HASTA" name="GLUC_HASTA"\
+            oninput="onInputField(this.id,this.value)">
+        </div>
+    </div>
+    
+    
+    <div class="row">
+        <div class="col-md-2">
+            Tipo Reporte
+        </div>
+        <div id="tipoReporte" class="col-md-10 title-font">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            Orden
+        </div>
+        <div id="tipoOrden" class="col-md-10 title-font">
+        </div>
+    </div>
+
+
+    <div class="row big-font">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-2 title-font">
+            <button type="button" class="btn btn-primary btn-block" onclick="executeReport()" >OK</button>
+        </div>
+        <div class="col-md-2 title-font">
+            <button type="button" class="btn btn-secondary btn-block" onclick="newRecord()" >Cancel</button>
+        </div>
+    </div>
+
+
+<!--
+    <div class="row">
+        <div class="col-md-2">
+            Glucosa
+        </div>
+        <div class="col-md-5">
+            <input type="number" class="col-md form-control title-font" id="GLUC_DESDE" name="GLUC_DESDE"
+                oninput="onInputField(this.id,this.value)" class="title-font">
+        </div>
+        <div class="col-md-5">
+            <input type="number" class="col-md form-control title-font" id="GLUC_HASTA" name="GLUC_HASTA"
+                oninput="onInputField(this.id,this.value)" class="title-font">
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-2">
+            Registro
+        </div>
+        <div id="tipoRegistro" class="col-md-10 title-font">
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-2">
+            Dia
+        </div>
+        <div id="diaSemana" class="col-md-10 title-font">
+        </div>
+    </div>
+    
+-->
+</form>

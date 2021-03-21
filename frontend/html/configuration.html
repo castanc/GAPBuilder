@@ -1,0 +1,20 @@
+ <!-- Grupo: Base Folder -->
+ 
+ <div class="formulario__grupo" id="grupo__BASE_FOLDER">
+    <label for="BASE_FOLDER" class="formulario__label">GAPP Builder Base Folder</label>
+    <div class="formulario__grupo-input">
+      <input type="text" class="formulario__input" name="BASE_FOLDER" id="BASE_FOLDER" placeholder="Base Folder Id" required
+        onkeyup="validateField('keyup',this.id, this.value, this.required)"
+        onblur="validateField('blur',this.id, this.value, this.required)"
+        
+      >
+      <i class="formulario__validacion-estado fas fa-times-circle"></i>
+    </div>
+    <p class="formulario__input-error">Enter a valid url of an existing folder in GDrive or a folder Name</p>
+  </div>
+
+  </hr>
+  <div class="formulario__grupo formulario__grupo-btn-enviar">
+    <button id="btnSubmit" type="submit" class="formulario__btn">Submit</button>
+    <p class="hidden formulario__mensaje-exito" id="formulario__mensaje-exito">Form sent succesfully!</p>
+  </div>

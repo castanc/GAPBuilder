@@ -1,0 +1,94 @@
+      <!-- Grupo: Meal Type -->
+      <div class="formulario__grupo" id="grupo__foodCategory">
+        <label for="MEAL_TYPE" class="formulario__label">Meal Type</label>
+        <div class="formulario__grupo-input">
+          <div id="select_MEAL_TYPE">
+            <?!= getSelect("Items","MT"); ?>
+          </div>
+          <i class="formulario__validacion-estado fas fa-times-circle"></i>
+        </div>
+        <p class="formulario__input-error">Select Food Category</p>
+      </div>
+
+
+      <!-- Grupo: Food Category -->
+      <div class="formulario__grupo" id="grupo__foodCategory">
+        <label for="FOOD_CATEGORY" class="formulario__label">Food Category</label>
+        <div class="formulario__grupo-input">
+          <div id="select_FOOD_CATEGORY">
+            <?!= getSelect("Items","FC"); ?>
+          </div>
+          <i class="formulario__validacion-estado fas fa-times-circle"></i>
+        </div>
+        <p class="formulario__input-error">Select Food Category</p>
+      </div>
+
+      <!-- Grupo: Food  -->
+      <div class="formulario__grupo" id="grupo__foodCategory">
+        <label for="FOOD_ITEM" class="formulario__label">Food Category</label>
+        <div class="formulario__grupo-input">
+          <div id="select_FOOD_ITEM">
+          </div>
+          <i class="formulario__validacion-estado fas fa-times-circle"></i>
+        </div>
+        <p class="formulario__input-error">Select Food Category</p>
+      </div>
+
+
+      <!-- Grupo: Fecha -->
+      <div class="formulario__grupo" id="grupo__fecha">
+        <label for="FECHA" class="formulario__label">Fecha</label>
+        <div class="formulario__grupo-input">
+          <input type="date" class="formulario__input" name="FECHA" id="FECHA" placeholder="2021-02-01">
+          <i class="formulario__validacion-estado fas fa-times-circle"></i>
+        </div>
+        <p class="formulario__input-error">Ingrese Fecha Valida</p>
+      </div>
+
+      <!-- Grupo: Hora -->
+      <div class="formulario__grupo" id="grupo__hora">
+        <label for="HORA" class="formulario__label">Hora</label>
+        <div class="formulario__grupo-input">
+          <input type="time" class="formulario__input" name="HORA" id="HORA" placeholder="00:00">
+          <i class="formulario__validacion-estado fas fa-times-circle"></i>
+        </div>
+        <p class="formulario__input-error">Ingrese Hora Valida</p>
+      </div>
+
+
+
+      <div class="formulario__mensaje" id="formulario__mensaje">
+        <p><i class="hidden fas fa-exclamation-triangle"></i> <b>Error:</b> INgrese todos los campos correctamente. </p>
+      </div>
+
+      <div class="formulario__grupo formulario__grupo-btn-enviar">
+        <button type="submit" class="formulario__btn">Enviar</button>
+        <p class="hidden formulario__mensaje-exito" id="formulario__mensaje-exito">Formulario enviado exitosamente!</p>
+      </div>
+
+
+
+<div class="text-responsive">
+    <div class="row">
+        <div class="col-md-4"><label for="MEAL_TYPES">Comida</label></div>
+        <div class="col-md-8">
+            <div id="MEAL_TYPES"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4"><label for="FOOD_CATEGORIES">Categoria</label></div>
+        <div class="col-md-8">
+            <div id="FOOD_CATEGORIES"> </div>
+        </div>
+    </div>
+    <div class="row">
+        <hr>
+    </div>
+    <div class="row">
+        <div class="col-md-4"><label for="FOOD_ITEMS">Alimento</label></div>
+        <div class="col-md-8">
+            <div id="FOOD_ITEMS"> </div>
+        </div>
+    </div>
+</div>

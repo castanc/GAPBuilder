@@ -1,0 +1,32 @@
+<!-- Grupo: Meal Type -->
+<div class="formulario__grupo" id="grupo__mealType">
+    <label for="MEAL_TYPE">Meal Type</label>
+    <div id="MEAL_TYPE" class="formulario__grupo-input">
+        <?!= getHtmlSelect("Items","MT"); ?>
+        <i class=hidden "formulario__validacion-estado fas fa-times-circle"></i>
+    </div>
+    <p class="hidden formulario__input-error">Select Food Category</p>
+</div>
+
+
+<!-- Grupo: Food Category -->
+<div class="formulario__grupo" id="grupo__foodCategory">
+    <label for="FOOD_CATEGORY" >Food Category</label>
+    <div id="FOOD_CATEGORY" class="formulario__grupo-input">
+        <?!= getHtmlSelect("Items","FC"); ?>
+        <i class="hidden formulario__validacion-estado fas fa-times-circle"></i>
+    </div>
+    <p class="hidden formulario__input-error">Select Food Category</p>
+</div>
+
+<!-- Grupo: Food  -->
+<div class="formulario__grupo" id="grupo__foodItem">
+    <label for="FOOD_ITEM" class="formulario__label">Food Item</label>
+    <div id="FOOD_ITEM" class="formulario__grupo-input">
+    </div>
+    <i class="hidden formulario__validacion-estado fas fa-times-circle"></i>
+</div>
+<p class="formulario__input-error">Select Food Item</p>
+</div>
+<div id="rows" class="row">
+</div>

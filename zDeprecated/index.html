@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>GSApp</title>
+  <!--
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  -->
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+  <base target="_top">
+  <!-- 
+        https://www.w3schools.com/bootstrap4/bootstrap_get_started.asp        
+    -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+</head>
+<?!= include('frontend/css/stylesheet'); ?>
+<?!= include('frontend/js/js_model'); ?>
+<?!= include('frontend/js/js_utils'); ?>
+<?!= include('frontend/js/js_moment'); ?>
+<?!= include('frontend/js/js_index'); ?>
+
+
+<body class="big-font">
+  <div class="col-md-12">
+    <?!= include('frontend/menu2'); ?>
+  </div>
+  <div class="container-fluid">
+    <div id="mainContent">
+      <form id="myForm">
+        <div id="DIVfechaHora">
+          <div class="row">
+            <div class="col-md text-responsive">
+              <label for="FECHA">Fecha</label>
+            </div>
+
+            <div class="col-md text-responsive">
+              <input type="date" class="form-control title-font" id="FECHA" name="FECHA" placeholder="Fecha" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md text-responsive">
+              <label for="HORA">Hora</label>
+            </div>
+            <div class="col-md">
+              <input type="time" id="HORA" name="HORA" placeholder="HH:MM"
+                pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$" class="inputs time title-font"
+                style="color: black;" required>
+            </div>
+          </div>
+        </div>
+
+        <div id="DIVrecType" class="row">
+          <div id="REC_TYPE" class="col-md"> </div>
+          <div class="row">
+            <div class="col-md text-responsive">
+            </div>
+          </div>
+        </div>
+
+    </div>
+    <div id="spinner" class="spinner-border text-primary" id="spinner" role="status" style="display:none;">
+      <span class="sr-only">Loading...</span>
+    </div>
+
+  </div>
+
+  <div id="content"></div>
+  </div>
+
+  <div id="mainButtons">
+    <div class="row">
+      <div class="col-md-2 title-font">
+        <button type="button" class="btn btn-primary btn-block" onclick="processForm()">OK</button>
+      </div>
+      <div class="col-md-2 title-font">
+        <button type="button" class="btn btn-secondary btn-block" onclick="cancelSubmit()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="chart" class="row">
+
+  </div>
+
+  <div id="reportForm" style="display: none; z-index: -1;">
+    <?!= include('frontend/report'); ?>
+  </div>
+  <div id="totales">
+  </div>
+  <div id="report">
+  </div>
+
+  <div class="row-fat">
+    <hr>
+  </div>
+  </form>
+  </div>
+  <div id="DIVchildContent">
+    <div id="rows"></div>
+  </div>
+  </div>
+
+  <div class="footer-wrapper flex-shrink-0 p-10 text-center bg-content">
+
+    <div class="footer">
+      <div id="result" class="container h4 mb-4 text-info text-center"></div>
+      <div id="error" class="container h4 mb-4 text-danger"></div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modalPopUp" class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id="modalBody">
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    <?!= getDataDeclarations("Items,FoodItems,DrugItems,ExeItems,FOODComponents,DRUGComponents"); ?>
+    <?!= getItems(); ?>
+  </script>
+</body>
+
+</html>

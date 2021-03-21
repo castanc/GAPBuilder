@@ -1,0 +1,262 @@
+<script>
+
+
+
+    function padLeft(value, maxValue, padChars) {
+        if (value < maxValue)
+            return `${padChars}${value.toString()}`;
+        return value.toString();
+    }
+
+    function writeInnerHtml(controlId, html) {
+        let control = document.getElementById(controlId);
+        if (control != undefined) {
+            control.innerHTML = html;
+        }
+        else {
+            console.log(`error writeInnerHtml() control ${controlId} not found`)
+        }
+
+    }
+
+    function getDateYMD(dt = null, sep = "-") {
+        if (dt == null)
+            dt = new Date();
+
+        var m = padLeft(dt.getMonth() + 1, 10, '0');
+        var d = padLeft(dt.getDate(), 10, '0');
+        var fecha = `${dt.getFullYear()}${sep}${m}${sep}${d}`;
+        //var h = padLeft(dt.getHours(), 10, '0');
+        //var mi = padLeft(dt.getMinutes(), 10, '0');
+
+        return fecha;
+    }
+
+    function getDateFromYMD(dtStr, sep = "-") {
+        let dt = null;
+        let fp = dtStr.split(" ");
+        let p;
+        try {
+            if (fp.length > 0)
+                p = fp[0].split(sep);
+            else
+                p = dtStr.split(sep);
+
+            if (p.length > 2) {
+                if (fp.length > 1) {
+                    let h = fp[1].split(":");
+                    if (h.length > 1)
+                        dt = new Date(Number(p[0]), Number(p[1] - 1), Number(p[2]),
+                            Number(h[0]), Number(h[1]));
+                    else
+                        dt = new Date(Number(p[0]), Number(p[1] - 1), Number(p[2]));
+                }
+                else dt = new Date(Number(p[0]), Number(p[1] - 1), Number(p[2]));
+            }
+
+
+
+        }
+        catch (ex) {
+
+        }
+        return dt;
+    }
+
+    function getMinutes(time) {
+        let minutes = 0;
+        let p = time.split(":");
+        try {
+            let h = Number(p[0]);
+            let m = Number(p[1]);
+
+            minutes = h * 60 + m;
+        }
+        catch (ex) {
+
+        }
+
+        return minutes;
+    }
+
+    function clearDiv(id) {
+        let doc = document.getElementById(id);
+        if (doc != undefined)
+            doc.innerHTML = "";
+    }
+
+    function setValue(fieldId, value, form = "myForm") {
+        var x = document.forms[form][fieldId];
+        if (x != undefined)
+            x.value = value;
+        else
+            console.log(`setValue() can't find ${fieldId} in form ${form}. value:${value}`);
+
+    }
+
+    function getValueById(fieldId) {
+        var x = document.getElementById(fieldId);
+        if (x != undefined) {
+            return x.value;
+        }
+        else
+            return "";
+
+    }
+
+    function getNumberById(fieldId) {
+        var x = document.getElementById(fieldId);
+        if (x != undefined) {
+            try {
+                return x.value;
+            }
+            catch (ex) {
+                return 0;
+            }
+        }
+        else
+            return 0;
+
+    }
+
+    function setValueById(fieldId, value) {
+        var x = document.getElementById(fieldId);
+        if (x != undefined) {
+            console.log(`setValuebyId() setting to ${fieldId} value:${value}`);
+            console.log(x);
+            x.value = value;
+        }
+        else
+            console.log(`setValuebyId() can't find ${fieldId} value:${value}`);
+
+    }
+
+    function getValue(fieldId, form = "myForm") {
+        var x = document.forms[form][fieldId];
+        if (x == undefined)
+            return "";
+        else return x.value;
+    }
+
+    function getElementText(fieldId) {
+        var x = document.getElementById(fieldId);
+        if (x == undefined)
+            return "";
+        else return x.innerText;
+    }
+
+
+    function getHMFromMinutes(min) {
+        let h = Math.trunc(min / 60);
+        let m = min / 60 - h;
+        m = Math.trunc(m * 60);
+        return `${h}:${m}`;
+    }
+    function getHM(dt = null) {
+        let sHour = "";
+        if (dt == null)
+            dt = new Date();
+        try {
+            sDate = dt.toString();
+            let p = sDate.split("T");
+            if (p.length > 1) {
+                p = p[1].split(":");
+                if (p.length > 1)
+                    sHour = `${p[0]}:${p[1]}`;
+            }
+        }
+        catch (ex) {
+
+        }
+        return sHour;
+    }
+
+    function getSelectedValue(fieldId) {
+        let select = document.getElementById(fieldId);
+        if (select != undefined) {
+            // console.log(select.options);
+            // console.log(select.selectedIndex);
+            // console.log(select.options[select.selectedIndex]);
+            return select.options[select.selectedIndex];
+        }
+        else return "";
+    }
+
+
+    function showMessage(text) {
+        writeInnerHtml("result", text);
+    }
+
+    function showError(text) {
+        writeInnerHtml("error", text);
+    }
+
+
+    function showDiv(divId, value = true) {
+        let div = document.getElementById(divId);
+        if (div != undefined) {
+            if (value)
+                div.style.display = "block";
+            else
+                div.style.display = "none";
+        }
+        else {
+            console.log(`ERROR div not found ${divId}`);
+        }
+    }
+
+    function hideDiv(divId, value = false) {
+        let div = document.getElementById(divId);
+        if (div != undefined) {
+            if (value)
+                div.style.display = "block";
+            else
+                div.style.display = "none";
+        }
+        else {
+            console.log(`ERROR div not found ${divId}`);
+        }
+    }
+
+
+    function setHtml(id, html) {
+        let control = document.getElementById(id);
+        if (control != undefined)
+            control.innerHTML = html;
+
+    }
+
+    function openBrowser(url) {
+        console.log("openBrowser()");
+        console.log(url);
+        if (url.length > 0)
+            window.open(url);
+    }
+
+    function disableButtons(state) {
+        const buttons = document.querySelectorAll('button');
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].disabled = state;
+        };
+
+        function getCurrentText(btn) {
+            let currentText = document.querySelector(`#${btn}`).innerHTML;
+            return currentText;
+        }
+
+        function setCurrentText(btn, text) {
+            document.querySelector(`#${btn}`).innerHTML = text;
+        }
+
+
+        function hideLabel(lbl) {
+            document.querySelector(`#${lbl}`).style.display = "none";
+        }
+
+
+    }
+
+
+
+
+</script>

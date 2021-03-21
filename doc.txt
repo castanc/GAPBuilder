@@ -1,0 +1,75 @@
+manipualte select:
+
+        /*
+        let select = document.getElementById("SELECT_RT");
+        if ( select != undefined )
+        {
+        console.log(select.options);
+        console.log(select.selectedIndex);
+        console.log(select.options[select.selectedIndex]);
+        }
+        */
+
+        todo:
+
+        add attachnments to events:
+
+        file or file url
+        description
+        tags
+        date created
+        date last modified
+
+
+jan 25 2021
+UI AND PERSISTENCE OK
+
+TODO:
+
+EVENT: get texarea in a col-md-9
+        add attachments:
+        load file
+        file name
+        url
+        tags
+        Type
+        save file in google drive
+
+for gluc and event: 
+        upload file     
+        provide url
+
+add basic validations:
+        ranges
+
+import legacy:
+        do not improt GLUC before first date of current NEO
+        FOOD description in single cell in master record do not try to generate detail
+        DRUG: consolidate and generate master record
+        verify record is not existing
+
+
+reports:
+
+for a date range / time range
+selection of record types:
+
+export to sheets
+export to html
+export to presentation (dashboard graphics )
+and also export to html dashboard
+
+todo: create index files to check unique records
+checking in a big string, without filtering an array (faster)
+
+KEEP in database:
+-status of long process
+-allow to cancel process 
+
+
+
+20210302
+include another htmls in html
+https://stackoverflow.com/questions/8988855/include-another-html-file-in-a-html-file
+        
+

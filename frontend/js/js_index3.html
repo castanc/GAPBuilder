@@ -1,0 +1,427 @@
+<script>
+    let BaseFolderId = "";
+    let AppFolderId = "";
+    let CurrentApp = "";
+    let CurrentForm = "";
+    let CurrentSection = "";
+
+    let formulario;
+    let inputs;
+    let fecha = "2021-01-01";
+    let hora = "00:00";
+    let RecTypes;
+    let GlucLevels;
+    let response;
+    let uiCache = {};
+    let sortDescending = false;
+    let sortDescending2 = false;
+    let sortCol2 = 0;
+    let recType = "";
+    let Data = new KVPCollection();
+    let db = new LocalData();
+    let recInfo = [];
+    let formKey = "";
+    let record = {};
+    let records = [];
+    let confirming = false;
+
+
+    function processResponse(json) {
+        response = JSON.parse(json);
+        console.log("Response received from Server. processResponse():", response);
+        hideDiv("spinner");
+        if (response.result == 200) {
+            Data = new KVPCollection();
+            uiCache.formName = response.formName;
+            uiCache.formId = response.formId;
+            uiCache.NeedsConfirmation = response.NeedsConfirmation;
+            uiCache.controlId = response.controlId;
+            for (var i = 0; i < response.html.length; i++) {
+                writeInnerHtml(response.html[i].key, response.html[i].value)
+                uiCache[response.html[i].key] = response.html[i].value;
+            }
+            updateCache();
+            disableButtons(true);
+
+            let msg = "";
+            for (var i = 0; i < response.messages.lenght; i++) {
+                msg = `${msg}<p class="text-info>${response.messages[i]}</p></br>`;
+            }
+            writeInnerHtml("result", msg);
+
+        }
+        else {
+            let row = `<tr><td>Server Error</td><td>${response.result}</td></tr>`;
+            for (var i = 0; i < response.error.length; i++) {
+                row = `${row}<tr><td>${response.error[i].key}</td><td>${response.error[i].value}</td></tr>`;
+            }
+
+            let table = `<table>${row}</table>`;
+            writeInnerHtml("error", table);
+        }
+    }
+
+
+    function loadBaseData() {
+        let result = true;
+        let json = localStorage.getItem("db");
+        if (json != undefined)
+            db = JSON.parse(json);
+        else result = false;
+        return result;
+
+    }
+
+    function refreshDate() {
+        dt = new Date();
+        var m = padLeft(dt.getMonth() + 1, 10, '0');
+        var d = padLeft(dt.getDate(), 10, '0');
+        fecha = `${dt.getFullYear()}-${m}-${d}`;
+        var h = padLeft(dt.getHours(), 10, '0');
+        var mi = padLeft(dt.getMinutes(), 10, '0');
+        hora = `${h}:${mi}`;
+
+        var dti = document.getElementById('FECHA');
+        dti.value = fecha;
+
+        dti = document.getElementById('HORA');
+        dti.value = hora;
+    }
+
+
+    function sortFunction2(a, b) {
+        if (a[sortCol2] == b[sortCol2]) {
+            return 0;
+        }
+        else {
+            if (sortDescending2)
+                return (a[sortCol2] > b[sortCol2]) ? -1 : 1;
+            else
+                return (a[sortCol2] < b[sortCol2]) ? -1 : 1;
+        }
+    }
+
+
+    function getSelect(arr, name, idCol, valueCol,
+        title = "", selectedValue = "", classes = "select-css", multiple = "", required = "", sortDir = "A") {
+        let options = "";
+        let onChange = `onchange="onchange_${name}(this.options[this.selectedIndex].value)"`;
+
+        if (sortDir == "A" || sortDir == "D") {
+            sortCol2 = valueCol;
+            sortDescending2 = (sortDir == "D");
+            arr = arr.sort(sortFunction2);
+            console.log("getSelect() sorted:", arr);
+        }
+
+        if (classes != "")
+            classes = `class="${classes}"`;
+
+        if (title.length == 0)
+            title = "Select...";
+
+        if (selectedValue = "")
+            options = `<option value="" selected>${title}</option>`;
+        else
+            options = `<option value="">${title}</option>`;
+
+
+        for (var i = 0; i < arr.length; i++) {
+            if (selectedValue != "" && arr[i][idCol] == selectedValue)
+                options = `${options}<option value="${arr[i][idCol]}" selected>${arr[i][valueCol]}</option>`
+            else
+                options = `${options}<option value="${arr[i][idCol]}">${arr[i][valueCol]}</option>`
+        }
+
+        let html = `<select name="SELECT_${name}" id="SELECT_${name}" ${required} ${multiple} 
+            ${onChange} 
+            ${classes}>
+        ${options}</select>`
+
+        //console.log(`getHtml(): startRow:${startRow}`,arr,html);
+        return html;
+
+    }
+
+
+
+    function resetForm(formId) {
+        let form = document.getElementById(formId);
+        form.reset();
+        refreshDate();
+    }
+
+    function updateCache() {
+        localStorage.setItem(`uiCache}`, JSON.stringify(uiCache));
+
+    }
+
+    function restoreCache() {
+        let json = localStorage.getItem("uiCache");
+        if (json == undefined)
+            uiCache = {};
+        else
+            uiCache = JSON.parse(json);
+    }
+
+
+
+    function failureHandler(error) {
+        hideDiv("spinner");
+        writeInnerHtml("error", error);
+    }
+
+
+    //2.getLocalData
+    function processResponseInitialize(json) {
+        processResponse(json);
+        if (response.result == 200) {
+            for (var i = 0; i < response.objects.length; i++) {
+                db = response.objects[i].value;
+                console.log("db", db);
+                localStorage.setItem("db", JSON.stringify(db));
+                break;
+            }
+        }
+        hideDiv("spinner");
+    }
+
+
+    function processResponseGetApp(json) {
+        processResponse(json);
+        if (response.result == 200) {
+            showDiv(response.html[0].key)
+        }
+    }
+    //0.1 Process Response Load Main
+    function processResponseLoadMain(json) {
+        processResponse(json);
+        if (response.result == 200) {
+            refreshDate();
+            if (!loadBaseData())
+                google.script.run.withFailureHandler(failureHandler)
+                    .withSuccessHandler(processResponseInitialize)
+                    .getLocalData();
+        }
+    }
+
+    function changeClasses(campo,condition) {
+        if (condition) {
+            document.getElementById(`grupo__${campo}`).classList.remove('formulario__grupo-incorrecto');
+            document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-correcto');
+            document.querySelector(`#grupo__${campo} i`).classList.add('fa-check-circle');
+            document.querySelector(`#grupo__${campo} i`).classList.remove('fa-times-circle');
+            document.querySelector(`#grupo__${campo} .formulario__input-error`).classList.remove('formulario__input-error-activo');
+            disableButtons(false);
+        } else {
+            document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-incorrecto');
+            document.getElementById(`grupo__${campo}`).classList.remove('formulario__grupo-correcto');
+            document.querySelector(`#grupo__${campo} i`).classList.add('fa-times-circle');
+            document.querySelector(`#grupo__${campo} i`).classList.remove('fa-check-circle');
+            document.querySelector(`#grupo__${campo} .formulario__input-error`).classList.add('formulario__input-error-activo');
+            disableButtons(true);
+        }
+    }
+
+    function validateField(eventId, inputId, value, required) {
+        console.log("validateFiled()", inputId, value, required);
+        changeClasses(inputId, required && value.length > 0);
+    }
+
+    function validateField2(id) {
+        console.log("validateFiled2()", id);
+    }
+
+    function validateField0() {
+        console.log("validate0()");
+    }
+
+
+
+
+
+    //0. Initialize
+    function initialize() {
+        showDiv(spinner);
+        formulario = document.getElementById('formulario');
+        restoreCache();
+
+
+        if (uiCache.App == undefined)
+            google.script.run.withFailureHandler(failureHandler).withSuccessHandler(processResponseGetApp).GetApp();
+        else
+            google.script.run.withFailureHandler(failureHandler).withSuccessHandler(processResponseLoadMain).getForm("NewRecord", "sectionNew");
+
+
+
+        //inputs = document.querySelectorAll('#formulario input');
+        // inputs.forEach((input) => {
+        // input.addEventListener('keyup', validarFormulario);
+        // input.addEventListener('blur', validarFormulario);
+        //});
+
+    }
+
+    function openSection(sectionName) {
+        let p = sectionName.split("_");
+        console.log("openSection()", p, currentSection);
+        if (p[1] == currentSection) {
+            showDiv(p[1], false);
+            currentSection = "";
+            return;
+        }
+        currentSection = p[1];
+        showDiv(currentSection, true);
+    }
+
+
+    function submitForm() {
+        if (uiCache.NeedsConfirmation && !confirming) {
+            writeInnerHtml("btnSubmit", "Confirm");
+            confirming = true;
+            return;
+        }
+        else {
+            writeInnerHtml("btnSubmit", "Submit");
+            confirming = false;
+        }
+        if (document.forms[uiCache.formId].checkValidity()) {
+            disableButtons(true);
+            showDiv("spinner");
+            showMessage("Sending form to Server...");
+            hideDiv(uiCache.controlId);
+            google.script.run.withFailureHandler(failureHandler)
+                .withSuccessHandler(processResponSubmitForm)
+                .ProcessForm(uiCache.formId, duiCache.controlId,document.Forms[uiCache.formId]);
+        }
+        else
+            showError("Some errors validating form.");
+
+    }
+
+
+
+    function removeItem(id) {
+        records = records.filter(x => x.id != id);
+        for (var i = 0; i < records.length; i++) {
+            records[i].id = i;
+        }
+        renderFoodItems();
+    }
+
+
+    function onchange_FC(e) {
+        Data.update("FOOD_CATEGORY", e);
+
+        let html = getSelect(db.FoodItems.filter(x => x[0] == e), "FoodItems", 1, 2, "Select Food Item", "", "select-css");
+        writeInnerHtml("FOOD_ITEM", html);
+    }
+
+    function renderFoodItems(div = "rows", readOnly = false) {
+        let row = "";
+        let delIcon = "";
+        let inputFields = "";
+        if (records.length > 0) {
+
+            row = `<div class="row small-content">
+            <div class="col-md-2"></div>
+            <div class="col-md-2"></div>
+            <div class="col-md-3">Cant</div>
+            <div class="col-md-1">Un</div>
+            <div class="col-md-4">Item</div>
+            </div>
+            `;
+
+            for (var i = 0; i < records.length; i++) {
+                row = `${row}
+            <div class="row  small-content">
+                <div class="col-md-2">
+                    <img src="${records[i].url}" class="thumb"></img>
+                    </div>
+                <div class="col-md-2 cursorPointer"><i class="fas fa-trash-alt"  onclick="removeItem(${i})"></i></div>
+                <div class="col-md-3">
+                    <input type="number" id="q{${i}} name="q${i}" placeholder="Cant" value="${records[i].cant}" onchange="setRecord(${i},this.value)">
+                </div>
+                <div class="col-md-1">
+                    ${records[i].unit}
+                </div>
+                <div class="col-md-4">${records[i].descr}</div>
+
+            </div>`;
+            }
+        }
+        writeInnerHtml(div, row);
+
+    }
+
+
+
+    function onchange_FoodItems(e) {
+        console.log("onchange_FoodItems");
+        let fi = db.FoodItems.filter(x => x[1] == e);
+        if (fi.length > 0) {
+            record = {};    // new RecordItem();
+            record.descr = fi[0][2];
+            record.url = fi[0][9];
+            record.unit = fi[0][4];
+            record.cant = fi[0][3];
+            record.divisor = "";
+            record.itemId = Number(e);
+            record.id = records.length;
+            records.push(record);
+            renderFoodItems();
+        }
+
+
+    }
+
+    function onchange_MT(e) {
+        Data.update("MEAL_TYPE", e);
+    }
+
+    function processResponseLoadForm(json) {
+        processResponse(json);
+        if (response.result == 200) {
+            switch (recType) {
+                case "FOOD": {
+
+                    break;
+                }
+            }
+
+            uiCache[`FORM_${recType}`] = response.html[0].value;
+            localStorage.setItem("uiCache", JSON.stringify(uiCache));
+        }
+    }
+
+    function onchange_RT(e) {
+        recType = e;
+        Data.update("REC_TYPE", recType);
+        recInfo = db.Items.filter(x => x[0] == "RT" && x[1] == recType);
+        formKey = `FORM_${recType}`;
+        Data = new KVPCollection();
+        Data.initialize(`REC_TYPE,FECHA,HORA,${recInfo[3]}`);
+
+        if (uiCache[formKey] == undefined)
+            google.script.run.withFailureHandler(failureHandler).withSuccessHandler(processResponseLoadForm)
+                .getForm(recType, "content");
+        else
+            writeInnerHtml("content", uiCache[formKey]);
+
+        console.log("onchange_RT", e);
+    }
+
+
+
+    console.log("js_index onLoad")
+    window.addEventListener('load', initialize);
+    window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
+        console.log("unahndled error:", errorMsg);
+        console.log(url);
+        console.log(lineNumber);
+        return false;
+    }
+
+
+
+</script>

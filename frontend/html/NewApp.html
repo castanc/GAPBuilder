@@ -1,0 +1,52 @@
+ <!-- Grupo: Base Folder -->
+ <form action="" class="formulario" id="formSettings"></form>
+
+
+  <div class="formulario__grupo" id="grupo__Appcode">
+    <label for="APP_CODE" class="formulario__label">Application Code</label>
+    <div class="formulario__grupo-input">
+      <input type="text" class="formulario__input" name="APP_CODE" id="APP_CODE" placeholder="App Code" required>
+      <i class="formulario__validacion-estado fas fa-times-circle"></i>
+    </div>
+    <p class="formulario__input-error">Enter a non empty App Code</p>
+  </div>
+
+
+  <div class="formulario__grupo" id="grupo__hora">
+    <label for="APP_FOLDER" class="formulario__label">Application Folder</label>
+    <div class="formulario__grupo-input">
+      <input type="text" class="formulario__input" name="APP_FOLDER" id="APP_FOLDER" placeholder="App FOlder url or Folder Name" required>
+      <i class="formulario__validacion-estado fas fa-times-circle"></i>
+    </div>
+    <p class="formulario__input-error">Enter a valid url of an existing folder in GDrive</p>
+  </div>
+
+
+
+  <div class="formulario__grupo" id="grupo__hora">
+    <label for="APP_DESCR" class="formulario__label">Description</label>
+    <div class="formulario__grupo-input">
+      <input type="text" class="formulario__input" name="APP_DESCR" id="APP_DESCR" placeholder="Application Derscription" required>
+      <i class="formulario__validacion-estado fas fa-times-circle"></i>
+    </div>
+    <p class="formulario__input-error">Enter a a nonempty description</p>
+  </div>
+
+
+
+  <div class="formulario__grupo" id="grupo__hora">
+    <label for="APP_AUTHOR" class="formulario__label">Author</label>
+    <div class="formulario__grupo-input">
+      <input type="text" class="formulario__input" name="APP_AUTHOR" id="APP_AUTHOR" placeholder="Application Derscription" required>
+      <i class="formulario__validacion-estado fas fa-times-circle"></i>
+    </div>
+    <p>Your user will be the Admin User of this Application</p>
+    <p class="formulario__input-error">Enter a a nonempty Author Name</p>
+  </div>
+
+  <div class="formulario__grupo formulario__grupo-btn-enviar">
+    <button id="btnSubmit" type="submit" class="formulario__btn">Submit</button>
+    <p class="hidden formulario__mensaje-exito" id="formulario__mensaje-exito">Form sent succesfully!</p>
+  </div>
+</form>
+

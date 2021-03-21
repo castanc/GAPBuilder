@@ -1,0 +1,48 @@
+<main>
+    <form action="" class="formulario" id="formulario">
+      <!-- Grupo: Fecha -->
+      <div class="formulario__grupo" id="grupo__fecha">
+        <label for="FECHA" class="formulario__label">Fecha</label>
+        <div class="formulario__grupo-input">
+          <input type="date" class="formulario__input" name="FECHA" id="FECHA" placeholder="2021-02-01">
+          <i class="hidden formulario__validacion-estado fas fa-times-circle"></i>
+        </div>
+        <p class="hidden formulario__input-error">Ingrese Fecha Valida</p>
+      </div>
+
+      <!-- Grupo: Hora -->
+      <div class="formulario__grupo" id="grupo__hora">
+        <label for="HORA" class="formulario__label">Hora</label>
+        <div class="formulario__grupo-input">
+          <input type="time" class="formulario__input" name="HORA" id="HORA" placeholder="00:00">
+          <i class="hidden formulario__validacion-estado fas fa-times-circle"></i>
+        </div>
+        <p class="hidden formulario__input-error">Ingrese Hora Valida</p>
+      </div>
+
+      <!-- Grupo: Tipo Registro -->
+      <div class="formulario__grupo" id="grupo__tipoRegistro">
+        <label for="TIPO_REGISTRO" class="formulario__label">Tipo de Registro</label>
+        <div class="formulario__grupo-input">
+          <div id="select_TIPO_REGISTRO">
+            <?!= getRecTypes(); ?>
+          </div>
+          <i class="hidden formulario__validacion-estado fas fa-times-circle"></i>
+        </div>
+        <p class="hidden formulario__input-error">Seleccione el tipo de Registro deseado.</p>
+      </div>
+
+      <div id="content"></div>
+      <div id="detail"></div>
+
+
+      <div class="formulario__mensaje" id="formulario__mensaje">
+        <p><i class="hidden fas fa-exclamation-triangle"></i> <b>Error:</b> INgrese todos los campos correctamente. </p>
+      </div>
+
+      <div class="formulario__grupo formulario__grupo-btn-enviar">
+        <button type="submit" class="formulario__btn">Enviar</button>
+        <p class="hidden formulario__mensaje-exito" id="formulario__mensaje-exito">Formulario enviado exitosamente!</p>
+      </div>
+    </form>
+  </main>
